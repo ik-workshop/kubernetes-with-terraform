@@ -15,6 +15,9 @@ start: ## Deploy Minikube Kubernetes Cluster
 stop: ## Stop Minikube Kubernetes Cluster
 	@minikube stop
 
+view-ci: ## View CI
+	@bin/view-ci.sh
+
 hooks: ## Commit hooks setup
 	@pre-commit install
 	@pre-commit gc
@@ -22,3 +25,9 @@ hooks: ## Commit hooks setup
 
 validate: ## Validate with pre-commit hooks
 	@pre-commit run --all-files
+
+changelog: ## Create changelog
+	git-chglog -o CHANGELOG.md --next-tag `semtag final -s minor -o`
+
+release: ## Create release version
+	@semtag final -s minor
