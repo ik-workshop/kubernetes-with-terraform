@@ -8,11 +8,9 @@ help:
 t: ## Run terraform
 	@bin/terraform.sh apply
 
-cicd: ## Proxy CICD
-	@bin/show.ci.sh
-
 start: ## Deploy Minikube Kubernetes Cluster
-	@bin/minikube.sh
+	@minikube start --memory=16192 --cpus=4 \
+		--kubernetes-version=v1.15.0 --vm-driver=hyperkit
 
 stop: ## Stop Minikube Kubernetes Cluster
 	@minikube stop
@@ -21,3 +19,6 @@ hooks: ## Commit hooks setup
 	@pre-commit install
 	@pre-commit gc
 	@pre-commit autoupdate
+
+validate: ## Validate with pre-commit hooks
+	@pre-commit run --all-files
